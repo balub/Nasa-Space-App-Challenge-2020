@@ -1,0 +1,19 @@
+<div class="header">
+  <div></div>
+  <div class="header-title">I DONT KNOW THE TITLE</div>
+  <div class="header-menu">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="vote">
+        <mat-icon>how_to_vote</mat-icon>
+        <span>Vote</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>account_circle</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+.header {
+  background-color: #5c33ae;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-title {
+  color: white;
+  font-weight: bold;
+}
+
+.header-menu :first-child {
+  background-color: #5c33ae;
+  border-style: none;
+  color: white;
+  cursor: pointer;
+}
