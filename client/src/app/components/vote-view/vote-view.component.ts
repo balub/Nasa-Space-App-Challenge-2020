@@ -4,7 +4,7 @@ import * as data from '../../../assets/userdata.json';
 @Component({
   selector: 'app-vote-view',
   templateUrl: './vote-view.component.html',
-  styleUrls: ['./vote-view.component.scss'],
+  styleUrls: ['./vote-view.component.scss']
 })
 export class VoteViewComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'designation', 'action'];
