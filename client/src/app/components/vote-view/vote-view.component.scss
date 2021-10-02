@@ -1,0 +1,19 @@
+.vote-container{
+    margin-top: 2%;
+}
+
+.vote-table{
+    height: 90%;
+    width: 70%;
+    margin: auto;
+}
+
+.action-button{
+    background-color: rgb(76, 177, 76);
+    color: #fff;
+}
+
+.action-button:disabled{
+    background-color: rgb(164, 167, 161);
+    color: rgb(14, 13, 13);
+}

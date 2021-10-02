@@ -1,15 +1,29 @@
 import { Component, OnInit } from '@angular/core';
+import * as data from '../../../assets/userdata.json';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-vote-view',
   templateUrl: './vote-view.component.html',
-  styleUrls: ['./vote-view.component.scss']
+  styleUrls: ['./vote-view.component.scss'],
 })
 export class VoteViewComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'name', 'designation', 'action'];
+  userList: any = (data as any).default;
+  dataSource = this.userList;
+  voteCount = 0;
 
-  constructor() { }
+  constructor(private _snackBar: MatSnackBar) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  incrementVoteCount(user: any) {
+    this.voteCount++;
+    user.status = 'Approved';
+    if (this.voteCount >= 3) {
+      this._snackBar.open("Sent Alert To Pager", "",{
+        duration: 3000
+      });
+    }
   }
-
 }
