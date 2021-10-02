@@ -1,0 +1,106 @@
+{
+    "earthquake": [
+        {
+            "magnititude": "5",
+            "lat": 36.05989742619387,
+            "long": 139.58224264040405,
+            "date": ""
+        },
+        {
+            "magnititude": "",
+            "lat": 36.15989742619387,
+            "long": 138.68224264040405,
+            "date": ""
+        },
+        {
+            "magnititude": "",
+            "lat": 3,
+            "long": 4,
+            "date": ""
+        },
+        {
+            "magnititude": "",
+            "lat": 0,
+            "long": 0,
+            "date": ""
+        }
+    ],
+    "volcano": [
+        {
+            "volcano_name": "",
+            "lat": 37.15989742619387,
+            "long": 139.58224264040405,
+            "date": "",
+            "casualties": ""
+        },
+        {
+            "volcano_name": "",
+            "lat": 0,
+            "long": 0,
+            "date": "",
+            "casualties": ""
+        },
+        {
+            "volcano_name": "",
+            "lat": 0,
+            "long": 0,
+            "date": "",
+            "casualties": ""
+        },
+        {
+            "volcano_name": "",
+            "lat": 0,
+            "long": 0,
+            "date": "",
+            "casualties": ""
+        }
+    ],
+    "tsunami": [
+        {
+            "lat": 0,
+            "long": 0,
+            "date": "",
+            "cause": ""
+        },
+        {
+            "lat": 0,
+            "long": 0,
+            "date": "",
+            "cause": ""
+        },
+        {
+            "lat": 0,
+            "long": 0,
+            "date": "",
+            "cause": ""
+        },
+        {
+            "lat": 0,
+            "long": 0,
+            "date": "",
+            "cause": ""
+        }
+    ],
+    "landslide": [
+        {
+            "lat": 0,
+            "long": 0,
+            "fault_name": ""
+        },
+        {
+            "lat": 0,
+            "long": 0,
+            "fault_name": ""
+        },
+        {
+            "lat": 0,
+            "long": 0,
+            "fault_name": ""
+        },
+        {
+            "lat": 0,
+            "long": 0,
+            "fault_name": ""
+        }
+    ]
+}
