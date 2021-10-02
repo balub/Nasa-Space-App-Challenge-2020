@@ -1,1 +1,10 @@
-<p>alert-modal works!</p>
+<div style="display: flex; flex-direction: column; align-items: center">
+  <h1 mat-dialog-title style="font-size: 3em">{{ data.type }} Alert</h1>
+  <div mat-dialog-content>
+    <p>{{ data.message }}</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="actionNo()">No</button>
+    <button mat-button (click)="actionYes()" cdkFocusInitial>Yes</button>
+  </div>
+</div>

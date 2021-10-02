@@ -11,19 +11,45 @@ export class VoteViewComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'designation', 'action'];
   userList: any = (data as any).default;
   dataSource = this.userList;
-  voteCount = 0;
-
+  voteCountYes = 0;
   constructor(private _snackBar: MatSnackBar) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    for (let i = 1; i < this.userList.length; i++) {
+      if (this.userList[i].vote === 'Yes') {
+        setTimeout(() => {
+          if (this.userList[i].vote === 'Yes') {
+            this.incrementVoteCount(this.userList[i]);
+          }
+        }, this.userList[i].timeout);
+      } else {
+        setTimeout(() => {
+          if (this.userList[i].vote === 'No') {
+            this.decrementVoteCount(this.userList[i]);
+          }
+        }, this.userList[i].timeout);
+      }
+    }
+  }
 
   incrementVoteCount(user: any) {
-    this.voteCount++;
-    user.status = 'Approved';
-    if (this.voteCount >= 3) {
-      this._snackBar.open("Sent Alert To Pager", "",{
-        duration: 3000
-      });
+    this.voteCountYes++;
+    user.status = 'Voted';
+    user.vote = 'Yes';
+    this.evaluateVotes();
+  }
+
+  decrementVoteCount(user: any) {
+    user.status = 'Voted';
+    user.vote = 'No';
+    this.evaluateVotes();
+  }
+
+  evaluateVotes() {
+    if (this.voteCountYes >= 7) {
+      console.log('ALERT');
+
+      // Call the actual function to send data to pager
     }
   }
 }
