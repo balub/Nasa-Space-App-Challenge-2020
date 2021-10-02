@@ -1,1 +1,36 @@
-<p>vote-view works!</p>
+<div class="vote-container">
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 vote-table"
+  >
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let user">{{ user.empId }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+    </ng-container>
+
+    <!-- Designation -->
+    <ng-container matColumnDef="designation">
+        <th mat-header-cell *matHeaderCellDef>Designation</th>
+        <td mat-cell *matCellDef="let user">{{ user.designation }}</td>
+      </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Send Alert</th>
+      <td mat-cell *matCellDef="let user">
+        <button mat-button class="action-button" [disabled]="user.status==='Approved'" (click)="incrementVoteCount(user)">YES</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

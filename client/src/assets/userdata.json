@@ -1,0 +1,62 @@
+[
+  {
+    "empId": 1001,
+    "name": "Leanne Graham",
+    "designation": "Head Climatologist",
+    "status": "disapproved"
+  },
+  {
+    "empId": 1002,
+    "name": "Ervin Howell",
+    "designation": "Director",
+    "status": "disapproved"
+  },
+  {
+    "empId": 1003,
+    "name": "Clementine Bauch",
+    "designation": "System Management Specialist",
+    "status": "disapproved"
+  },
+  {
+    "empId": 1004,
+    "name": "Patricia Lebsack",
+    "designation": "Disaster Recovery Administrator",
+    "status": "disapproved"
+  },
+  {
+    "empId": 1005,
+    "name": "Chelsey Dietrich",
+    "designation": "Analyst",
+    "status": "disapproved"
+  },
+  {
+    "empId": 1006,
+    "name": "Mrs. Dennis Schulist",
+    "designation": "",
+    "status": "disapproved"
+  },
+  {
+    "empId": 1007,
+    "name": "Kurtis Weissnat",
+    "designation": "",
+    "status": "disapproved"
+  },
+  {
+    "empId": 1008,
+    "name": "Nicholas Runolfsdottir V",
+    "designation": "",
+    "status": "disapproved"
+  },
+  {
+    "empId": 1009,
+    "name": "Glenna Reichert",
+    "designation": "",
+    "status": "disapproved"
+  },
+  {
+    "empId": 1010,
+    "name": "Clementina DuBuque",
+    "designation": "",
+    "status": "disapproved"
+  }
+]
