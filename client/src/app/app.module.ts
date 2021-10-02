@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AlertModalComponent } from './components/alert-modal/alert-modal.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatMenuModule,
     MatIconModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent],
