@@ -18,15 +18,40 @@
 
     <!-- Designation -->
     <ng-container matColumnDef="designation">
-        <th mat-header-cell *matHeaderCellDef>Designation</th>
-        <td mat-cell *matCellDef="let user">{{ user.designation }}</td>
-      </ng-container>
+      <th mat-header-cell *matHeaderCellDef>Designation</th>
+      <td mat-cell *matCellDef="let user">{{ user.designation }}</td>
+    </ng-container>
 
-    <!-- Action Column -->
+    <!-- Action Columns -->
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Send Alert</th>
       <td mat-cell *matCellDef="let user">
-        <button mat-button class="action-button" [disabled]="user.status==='Approved'" (click)="incrementVoteCount(user)">YES</button>
+        <button
+          mat-button
+          class="action-button"
+          [disabled]="user.status === 'Voted'"
+          [ngClass]="{
+            'action-button--voted':
+              user.status === 'Voted' && user.vote === 'Yes',
+            'button--disabled': user.status === 'Voted' && user.vote === 'No'
+          }"
+          (click)="incrementVoteCount(user)"
+        >
+          YES
+        </button>
+        <button
+          style="margin-left: 10px"
+          mat-button
+          class="warn-button"
+          [disabled]="user.status === 'Voted'"
+          [ngClass]="{
+            'warn-button--voted': user.status === 'Voted' && user.vote === 'No',
+            'button--disabled': user.status === 'Voted' && user.vote === 'Yes'
+          }"
+          (click)="decrementVoteCount(user)"
+        >
+          NO
+        </button>
       </td>
     </ng-container>
 

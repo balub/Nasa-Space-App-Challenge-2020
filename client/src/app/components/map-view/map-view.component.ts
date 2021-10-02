@@ -1,7 +1,9 @@
+import { AlertModalComponent } from './../alert-modal/alert-modal.component';
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-map-view',
@@ -17,7 +19,7 @@ export class MapViewComponent implements OnInit {
     'Landslide',
   ];
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     (mapboxgl as any).accessToken = environment.mapbox.accessToken;
@@ -29,6 +31,7 @@ export class MapViewComponent implements OnInit {
       }
     );
     function errorLocation() {}
+    // this.openDialog();
   }
 
   successLocation = () => {
@@ -72,5 +75,11 @@ export class MapViewComponent implements OnInit {
       .then((data) => {
         this.setMarkerOnMap(map, data);
       });
+  }
+  openDialog() {
+    const dialogRef = this.dialog.open(AlertModalComponent, {
+      width: '450px',
+      data: { type: 'Tsunami', message: 'coming from backend' },
+    });
   }
 }

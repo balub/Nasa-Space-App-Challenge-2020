@@ -9,54 +9,72 @@
     "empId": 1002,
     "name": "Ervin Howell",
     "designation": "Director",
-    "status": "disapproved"
+    "status": "disapproved",
+    "timeout": 2000,
+    "vote": "Yes"
   },
   {
     "empId": 1003,
     "name": "Clementine Bauch",
     "designation": "System Management Specialist",
-    "status": "disapproved"
+    "status": "disapproved",
+    "timeout": 3500,
+    "vote": "No"
   },
   {
     "empId": 1004,
     "name": "Patricia Lebsack",
     "designation": "Disaster Recovery Administrator",
-    "status": "disapproved"
+    "status": "disapproved",
+    "timeout": 4500,
+    "vote": "Yes"
   },
   {
     "empId": 1005,
     "name": "Chelsey Dietrich",
     "designation": "Analyst",
-    "status": "disapproved"
+    "status": "disapproved",
+    "timeout": 4000,
+    "vote": "Yes"
   },
   {
     "empId": 1006,
     "name": "Mrs. Dennis Schulist",
-    "designation": "",
-    "status": "disapproved"
+    "designation": "Engineer",
+    "status": "disapproved",
+    "timeout": 3800,
+    "vote": "Yes"
   },
   {
     "empId": 1007,
     "name": "Kurtis Weissnat",
-    "designation": "",
-    "status": "disapproved"
+    "designation": "Senior Engineer",
+    "status": "disapproved",
+    "timeout": 6000,
+    "vote": "No"
   },
   {
     "empId": 1008,
     "name": "Nicholas Runolfsdottir V",
-    "designation": "",
-    "status": "disapproved"
+    "designation": "System Admin",
+    "status": "disapproved",
+    "timeout": 5500,
+    "vote": "Yes"
   },
   {
     "empId": 1009,
     "name": "Glenna Reichert",
-    "designation": "",
-    "status": "disapproved"
+    "designation": "Climatologist 1",
+    "status": "disapproved",
+    "timeout": 2000,
+    "vote": "No"
   },
   {
     "empId": 1010,
     "name": "Clementina DuBuque",
-    "designation": "",
-    "status": "disapproved"
+    "designation": "Climatologist 2",
+    "status": "disapproved",
+    "timeout": 2500,
+    "vote": "Yes"
   }
 ]
