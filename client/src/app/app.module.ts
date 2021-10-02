@@ -13,6 +13,8 @@ import { AlertModalComponent } from './components/alert-modal/alert-modal.compon
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
@@ -27,12 +29,15 @@ import { MatDialogModule } from '@angular/material/dialog';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
 
     // Material Imports
     MatMenuModule,
     MatIconModule,
     MatTableModule,
     MatButtonModule,
+    MatSnackBarModule,
+    MatSelectModule,
     MatSnackBarModule,
     MatDialogModule,
   ],
