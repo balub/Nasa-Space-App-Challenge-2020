@@ -22,6 +22,7 @@ export class MapViewComponent implements OnInit {
     'Landslide',
   ];
   chart: any = [];
+  earhtquakeData: any = [];
 
   constructor(
     public dialog: MatDialog,
@@ -34,7 +35,7 @@ export class MapViewComponent implements OnInit {
   ngOnInit(): void {
     this.socketService.setupConnection();
     // Subscribe to Data Stream
-    // this.renderGraphs();
+    this.renderGraphs();
 
     this.socketService.getKarenStream().subscribe((val: any) => {
       this.socketService.setMessage(val.message);
@@ -50,14 +51,14 @@ export class MapViewComponent implements OnInit {
     );
     function errorLocation() {}
     this.loadTemperatureData();
-    this.loadHumidityData();
     this.loadRainData();
-    // this.openDialog();
+    this.loadEarthquakeData();
+        // this.openDialog();
   }
 
   renderGraphs() {
     this.socketService.getDataStream().subscribe((val) => {
-      console.log(val);
+      this.earhtquakeData = val;
     });
   }
 
@@ -141,10 +142,6 @@ export class MapViewComponent implements OnInit {
       zoom: 4.5,
     });
 
-    //Navigator control
-    const nav = new mapboxgl.NavigationControl();
-    map.addControl(nav);
-
     //Logic to place markers on map
     fetch('https://guarded-atoll-48490.herokuapp.com/history')
       .then((res) => res.json())
@@ -159,60 +156,121 @@ export class MapViewComponent implements OnInit {
   }
 
   loadTemperatureData() {
-    this.mapChartService.graphData().subscribe((res: any) => {
-      let temp_max = res['list'].map((res: any) => res.main.temp_max);
-      let temp_min = res['list'].map((res: any) => res.main.temp_min);
-      let alldates = res['list'].map((res: any) => res.dt);
+    this.mapChartService.graphData().subscribe((data: any) => {
+      let temperature: any = [];
+      let humidity: any = [];
+      let rain: any = [];
+      let alldates: any = [];
 
-      let weatherDates: any = [];
-      alldates.forEach((res: any) => {
-        let jsdate = new Date(res * 1000);
-        weatherDates.push(
-          jsdate.toLocaleTimeString('en', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          })
-        );
-      });
-
+      for (let i = 0; i < data.weatherData.length; i++) {
+        if ((i >= 0 && i<=2) || (i >= 20 && i<=23) || (i >= 65 && i<=data.weatherData.length-1)) {
+          temperature.push(data.weatherData[i].temperature);
+          humidity.push(data.weatherData[i].humidity);
+          rain.push(data.weatherData[i].rain);
+          alldates.push(data.weatherData[i].dateTime);
+        }
+      }
       this.chart = new Chart('tempChart', {
         type: 'line',
         data: {
-          labels: weatherDates,
+          labels: alldates,
           datasets: [
             {
-              data: temp_max,
+              label: 'Temperature',
+              data: temperature,
               borderColor: '#3cba9f',
               fill: false,
             },
             {
-              data: temp_min,
+              label: 'Humidity',
+              data: humidity,
               borderColor: '#ffcc00',
               fill: false,
             },
           ],
         },
-        // options: {
-        //   legend: {
-        //     display: false
-        //   },
-        // scales: {
-        //   xAxes: [{
-        //     display: true
-        //   }],
-        //   yAxes: [{
-        //     display: true
-        //   }]
-        // }
-        // }
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            }
+          },
+        },
       });
     });
   }
 
-  loadHumidityData() {}
+  loadRainData() {
+    this.mapChartService.graphData().subscribe((data: any) => {
+      let rain: any = [];
+      let alldates: any = [];
 
-  loadRainData() {}
+      for (let i = 0; i < data.weatherData.length; i++) {
+        if ((i >= 0 && i<=2) || (i >= 20 && i<=23) || (i >= 65 && i<=data.weatherData.length-1)) {
+          rain.push(data.weatherData[i].chanceOfRain);
+          alldates.push(data.weatherData[i].dateTime);
+        }
+      }
+      this.chart = new Chart('rainChart', {
+        type: 'line',
+        data: {
+          labels: alldates,
+          datasets: [
+            {
+              label: 'Chance Of Rain',
+              data: rain,
+              borderColor: '#3cba9f',
+              fill: false,
+            }
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            }
+          },
+        },
+      });
+    });
+  }
+
+  loadEarthquakeData(){
+    this.mapChartService.graphData().subscribe((data: any) => {
+      let rain: any = [3.7, 3.8, 3.9, 3.3, 3.2, 3.5, 4.2, 4.1, 4.3, 4.5, 4.7, 4.8, 4.7];
+      let alldates: any = [];
+
+      for (let i = 0; i < data.weatherData.length; i++) {
+        if ((i >= 0 && i<=2) || (i >= 20 && i<=23) || (i >= 65 && i<=data.weatherData.length-1)) {
+          alldates.push(data.weatherData[i].dateTime);
+        }
+      }
+      this.chart = new Chart('sesmicChart', {
+        type: 'line',
+        data: {
+          labels: alldates,
+          datasets: [
+            {
+              label: 'Earthquake',
+              data: rain,
+              borderColor: '#3cba9f',
+              fill: false,
+            }
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+            }
+          },
+        },
+      });
+    });
+  }
 
   openDialog(val: any) {
     const dialogRef = this.dialog.open(AlertModalComponent, {

@@ -55,9 +55,10 @@
   padding: 10px;
   right: 10px;
 }
-.humidity-chart {
+.sesmic-chart {
   width: 30%;
   margin-top: 10px;
+  bottom: 220px;
   position: absolute;
   background-color: #fff;
   border-radius: 3px;
@@ -68,6 +69,7 @@
 .rain-chart {
   width: 30%;
   margin-top: 10px;
+  bottom: 20px;
   position: absolute;
   background-color: #fff;
   border-radius: 3px;
