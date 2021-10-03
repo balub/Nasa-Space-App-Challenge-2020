@@ -4,6 +4,7 @@ import * as mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { SocketIoService } from 'src/app/shared/services/socket-io.service';
 
 @Component({
   selector: 'app-map-view',
@@ -19,9 +20,19 @@ export class MapViewComponent implements OnInit {
     'Landslide',
   ];
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private socketService: SocketIoService
+  ) {}
 
   ngOnInit(): void {
+    this.socketService.setupConnection();
+    // Subscribe to Data Stream
+    // this.renderGraphs();
+
+    this.socketService.getKarenStream().subscribe((val) => {
+      this.openDialog(val);
+    });
     (mapboxgl as any).accessToken = environment.mapbox.accessToken;
     navigator.geolocation.getCurrentPosition(
       this.successLocation,
@@ -31,7 +42,12 @@ export class MapViewComponent implements OnInit {
       }
     );
     function errorLocation() {}
-    // this.openDialog();
+  }
+
+  renderGraphs() {
+    this.socketService.getDataStream().subscribe((val) => {
+      console.log(val);
+    });
   }
 
   successLocation = () => {
@@ -47,7 +63,10 @@ export class MapViewComponent implements OnInit {
             Magnitude:${disaster.magnitude}`
           );
           new mapboxgl.Marker({})
-            .setLngLat([parseFloat(disaster.longitude), parseFloat(disaster.latitude)])
+            .setLngLat([
+              parseFloat(disaster.longitude),
+              parseFloat(disaster.latitude),
+            ])
             .setPopup(popup)
             .addTo(map);
         });
@@ -62,7 +81,10 @@ export class MapViewComponent implements OnInit {
             VolcanoType:${disaster.volcanoType}`
           );
           new mapboxgl.Marker({ color: 'red' })
-            .setLngLat([parseFloat(disaster.longitude), parseFloat(disaster.latitude)])
+            .setLngLat([
+              parseFloat(disaster.longitude),
+              parseFloat(disaster.latitude),
+            ])
             .setPopup(popup)
             .addTo(map);
         });
@@ -74,7 +96,10 @@ export class MapViewComponent implements OnInit {
             Cause:${disaster.cause}`
           );
           new mapboxgl.Marker({ color: 'green' })
-            .setLngLat([parseFloat(disaster.longitude), parseFloat(disaster.latitude)])
+            .setLngLat([
+              parseFloat(disaster.longitude),
+              parseFloat(disaster.latitude),
+            ])
             .setPopup(popup)
             .addTo(map);
         });
@@ -86,7 +111,10 @@ export class MapViewComponent implements OnInit {
             Cause:${disaster.cause}`
           );
           new mapboxgl.Marker({ color: 'yellow' })
-            .setLngLat([parseFloat(disaster.longitude), parseFloat(disaster.latitude)])
+            .setLngLat([
+              parseFloat(disaster.longitude),
+              parseFloat(disaster.latitude),
+            ])
             .setPopup(popup)
             .addTo(map);
         });
@@ -119,10 +147,10 @@ export class MapViewComponent implements OnInit {
     this.setupMap([136.7, 37.5]);
   }
 
-  openDialog() {
+  openDialog(val: any) {
     const dialogRef = this.dialog.open(AlertModalComponent, {
       width: '450px',
-      data: { type: 'Tsunami', message: 'coming from backend' },
+      data: { type: val.disasterType, message: val.message },
     });
   }
 }
