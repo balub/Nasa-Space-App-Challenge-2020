@@ -47,7 +47,9 @@ export class VoteViewComponent implements OnInit {
 
   evaluateVotes() {
     if (this.voteCountYes >= 7) {
-      console.log('ALERT');
+      this._snackBar.open("Sending Alert To Pager Devices", "",{
+        duration: 3000
+      });
 
       // Call the actual function to send data to pager
     }
