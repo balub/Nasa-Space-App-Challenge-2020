@@ -22,8 +22,12 @@
     "@angular/router": "~12.2.0",
     "@types/mapbox-gl": "^2.4.2",
     "bootstrap": "^5.1.1",
+    "chart.js": "^3.5.1",
+    "chartjs-adapter-luxon": "^1.1.0",
+    "chartjs-plugin-streaming": "^2.0.0",
     "mapbox-gl": "^2.5.0",
     "rxjs": "~6.6.0",
+    "socket.io-client": "^4.2.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

@@ -17,6 +17,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { HttpClientModule } from '@angular/common/http';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 
 @NgModule({
@@ -33,6 +34,7 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    HttpClientModule,
 
     // Material Imports
     MatMenuModule,
