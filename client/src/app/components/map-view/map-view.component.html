@@ -1,14 +1,24 @@
 <div class="map-container">
   <div id="map"></div>
-  <div>
+  <div class="map-filter">
     <mat-form-field appearance="fill">
       <mat-label>Diasters Filter</mat-label>
       <mat-select
         [formControl]="diasterFormCtrl"
         multiple
+        (closed)="mapDisasterPoints()"
       >
-        <mat-option *ngFor="let disaster of disasterList" [value]="disaster">{{disaster}}</mat-option>
+        <mat-option *ngFor="let disaster of disasterList" [value]="disaster">{{
+          disaster
+        }}</mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
+  <div class="map-info">
+    <h4>Disaster</h4>
+    <div><span style="background-color: lightskyblue"></span>Earthquake</div>
+    <div><span style="background-color: red"></span>Volcano</div>
+    <div><span style="background-color: green"></span>Tsunami</div>
+    <div><span style="background-color: yellow"></span>Landslide</div>
   </div>
 </div>
