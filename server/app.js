@@ -7,8 +7,6 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const axios = require("axios");
 
-const port = 3000;
-
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
@@ -19,35 +17,13 @@ app.get("/history", (req, res) => {
   res.send(history);
 });
 
-//data-stream is to stream data in realtime
-//trigger-stream is to send alert triggers
-
-io.on("connection", (socket) => {
-  console.log("a user connected");
-
-  socket.on("trigger-stream", (msg) => {
-    io.emit("trigger-stream", msg);
-  });
-
-  setInterval(async () => {
-    const earthquake = await getCurrentWeather();
-    console.log(earthquake);
-    io.emit("data-stream", earthquake);
-  }, 4000);
-});
-
-server.listen(port, () => {
-  console.log(`listening on *:${port}`);
-});
-
-async function getCurrentWeather() {
-  let earthquakeData;
+app.get("/weather", async (req, res) => {
+  let weatherForecastData;
   await axios
     .get(
       "http://api.weatherapi.com/v1/forecast.json?key=6cf8820888f54e91a6a202101210210&q=Tokyo&days=10&aqi=no&alerts=no"
     )
     .then((data) => {
-      // console.log(data.data.forecast.forecastday);
       const weatherByHour = data.data.forecast.forecastday;
       const weatherData = [];
       for (item = 0; item < 3; item++) {
@@ -62,18 +38,44 @@ async function getCurrentWeather() {
           });
         }
       }
-      earthquakeData = {
-        magnitude: Math.floor(Math.random() * 100) + 1,
+      weatherForecastData = {
         weatherData: weatherData,
       };
     })
     .catch((err) => console.log(err));
+  
+  res.send(weatherForecastData);
+});
+
+//data-stream is to stream data in realtime
+//trigger-stream is to send alert triggers
+
+io.on("connection", (socket) => {
+  console.log("a user connected");
+
+  socket.on("trigger-stream", (msg) => {
+    io.emit("trigger-stream", msg);
+  });
+
+  socket.on("earthquake-stream", async (msg) => {
+    const earthquake = await getCurrentWeather();
+    io.emit("data-stream", { magnitude: msg, ...earthquake });
+  });
+
+  setInterval(async () => {
+    const earthquake = await getCurrentWeather((Math.random() * 4 + 1).toFixed(1));
+    io.emit("data-stream", earthquake);
+  }, 4000);
+});
+
+server.listen(process.env.PORT || 3000, () => {
+  console.log(`listening on *:${process.env.PORT}`);
+});
+
+async function getCurrentWeather(magnitude) {
+  let earthquakeData = {
+    magnitude: magnitude,
+    date: Date.now()
+  }
   return earthquakeData;
 }
-
-// io.emit("trigger-stream", {"disasterType":"","Message":""});
-
-//volcanos-->on Btn click on remote-->emit in trigger-stream--->{"disasterType":"volcano","Message":"some message"}
-//landslide-->on Btn click on remote-->emit in trigger-stream--->{"landslide":"volcano","Message":"some message"}
-//tsunami-->on Btn click on remote-->emit in trigger-stream--->{"landslide":"tsunami","Message":"some message"}
-//earthqake-->on Btn click on remote-->emit in data-stream--->change to some high value
