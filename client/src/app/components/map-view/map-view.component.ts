@@ -4,6 +4,8 @@ import * as mapboxgl from 'mapbox-gl';
 import { environment } from 'src/environments/environment';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Chart, registerables } from 'chart.js';
+import { MapChartService } from 'src/app/services/map-chart.service';
 
 @Component({
   selector: 'app-map-view',
@@ -18,8 +20,14 @@ export class MapViewComponent implements OnInit {
     'Tsunami',
     'Landslide',
   ];
+  chart: any = [];
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private mapChartService: MapChartService
+  ) {
+    Chart.register(...registerables);
+  }
 
   ngOnInit(): void {
     (mapboxgl as any).accessToken = environment.mapbox.accessToken;
@@ -31,11 +39,14 @@ export class MapViewComponent implements OnInit {
       }
     );
     function errorLocation() {}
+    this.loadTemperatureData();
+    this.loadHumidityData();
+    this.loadRainData();
     // this.openDialog();
   }
 
   successLocation = () => {
-    this.setupMap([136.7, 37.5]);
+    this.setupMap([145.5, 37.5]);
   };
 
   setMarkerOnMap(map: any, data: any) {
@@ -47,7 +58,10 @@ export class MapViewComponent implements OnInit {
             Magnitude:${disaster.magnitude}`
           );
           new mapboxgl.Marker({})
-            .setLngLat([parseFloat(disaster.longitude), parseFloat(disaster.latitude)])
+            .setLngLat([
+              parseFloat(disaster.longitude),
+              parseFloat(disaster.latitude),
+            ])
             .setPopup(popup)
             .addTo(map);
         });
@@ -62,7 +76,10 @@ export class MapViewComponent implements OnInit {
             VolcanoType:${disaster.volcanoType}`
           );
           new mapboxgl.Marker({ color: 'red' })
-            .setLngLat([parseFloat(disaster.longitude), parseFloat(disaster.latitude)])
+            .setLngLat([
+              parseFloat(disaster.longitude),
+              parseFloat(disaster.latitude),
+            ])
             .setPopup(popup)
             .addTo(map);
         });
@@ -74,7 +91,10 @@ export class MapViewComponent implements OnInit {
             Cause:${disaster.cause}`
           );
           new mapboxgl.Marker({ color: 'green' })
-            .setLngLat([parseFloat(disaster.longitude), parseFloat(disaster.latitude)])
+            .setLngLat([
+              parseFloat(disaster.longitude),
+              parseFloat(disaster.latitude),
+            ])
             .setPopup(popup)
             .addTo(map);
         });
@@ -86,7 +106,10 @@ export class MapViewComponent implements OnInit {
             Cause:${disaster.cause}`
           );
           new mapboxgl.Marker({ color: 'yellow' })
-            .setLngLat([parseFloat(disaster.longitude), parseFloat(disaster.latitude)])
+            .setLngLat([
+              parseFloat(disaster.longitude),
+              parseFloat(disaster.latitude),
+            ])
             .setPopup(popup)
             .addTo(map);
         });
@@ -116,8 +139,64 @@ export class MapViewComponent implements OnInit {
   }
 
   mapDisasterPoints() {
-    this.setupMap([136.7, 37.5]);
+    this.setupMap([145.5, 37.5]);
   }
+
+  loadTemperatureData() {
+    this.mapChartService.graphData().subscribe((res: any) => {
+      let temp_max = res['list'].map((res: any) => res.main.temp_max);
+      let temp_min = res['list'].map((res: any) => res.main.temp_min);
+      let alldates = res['list'].map((res: any) => res.dt);
+
+      let weatherDates: any = [];
+      alldates.forEach((res: any) => {
+        let jsdate = new Date(res * 1000);
+        weatherDates.push(
+          jsdate.toLocaleTimeString('en', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          })
+        );
+      });
+
+      this.chart = new Chart('tempChart', {
+        type: 'line',
+        data: {
+          labels: weatherDates,
+          datasets: [
+            {
+              data: temp_max,
+              borderColor: '#3cba9f',
+              fill: false,
+            },
+            {
+              data: temp_min,
+              borderColor: '#ffcc00',
+              fill: false,
+            },
+          ],
+        },
+        // options: {
+        //   legend: {
+        //     display: false
+        //   },
+        // scales: {
+        //   xAxes: [{
+        //     display: true
+        //   }],
+        //   yAxes: [{
+        //     display: true
+        //   }]
+        // }
+        // }
+      });
+    });
+  }
+
+  loadHumidityData() {}
+
+  loadRainData() {}
 
   openDialog() {
     const dialogRef = this.dialog.open(AlertModalComponent, {
