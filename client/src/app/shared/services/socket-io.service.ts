@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 })
 export class SocketIoService {
   socket: any;
+  message: string = '';
 
   constructor() {}
 
@@ -25,9 +26,18 @@ export class SocketIoService {
   getKarenStream() {
     const observable = new Observable((subscriber) => {
       this.socket.on('trigger-stream', (message: any) => {
+        console.log(message);
         subscriber.next(message);
       });
     });
     return observable;
+  }
+
+  setMessage(msg: string) {
+    this.message = msg;
+  }
+
+  getMessage() {
+    return this.message;
   }
 }

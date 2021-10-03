@@ -36,7 +36,8 @@ export class MapViewComponent implements OnInit {
     // Subscribe to Data Stream
     // this.renderGraphs();
 
-    this.socketService.getKarenStream().subscribe((val) => {
+    this.socketService.getKarenStream().subscribe((val: any) => {
+      this.socketService.setMessage(val.message);
       this.openDialog(val);
     });
     (mapboxgl as any).accessToken = environment.mapbox.accessToken;
