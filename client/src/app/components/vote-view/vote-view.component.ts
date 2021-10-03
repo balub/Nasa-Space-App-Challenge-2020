@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { SnackBarComponent } from './../snack-bar/snack-bar.component';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as data from '../../../assets/userdata.json';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -6,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   selector: 'app-vote-view',
   templateUrl: './vote-view.component.html',
   styleUrls: ['./vote-view.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class VoteViewComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'designation', 'action'];
@@ -47,8 +49,8 @@ export class VoteViewComponent implements OnInit {
 
   evaluateVotes() {
     if (this.voteCountYes >= 7) {
-      this._snackBar.open("Sending Alert To Pager Devices", "",{
-        duration: 3000
+      this._snackBar.openFromComponent(SnackBarComponent, {
+        duration: 7000,
       });
 
       // Call the actual function to send data to pager

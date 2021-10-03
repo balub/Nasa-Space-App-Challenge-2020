@@ -6,6 +6,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Chart, registerables } from 'chart.js';
 import { MapChartService } from 'src/app/services/map-chart.service';
+import { SocketIoService } from 'src/app/shared/services/socket-io.service';
 
 @Component({
   selector: 'app-map-view',
@@ -24,12 +25,20 @@ export class MapViewComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private mapChartService: MapChartService
+    private mapChartService: MapChartService,
+    private socketService: SocketIoService
   ) {
     Chart.register(...registerables);
   }
 
   ngOnInit(): void {
+    this.socketService.setupConnection();
+    // Subscribe to Data Stream
+    // this.renderGraphs();
+
+    this.socketService.getKarenStream().subscribe((val) => {
+      this.openDialog(val);
+    });
     (mapboxgl as any).accessToken = environment.mapbox.accessToken;
     navigator.geolocation.getCurrentPosition(
       this.successLocation,
@@ -43,6 +52,12 @@ export class MapViewComponent implements OnInit {
     this.loadHumidityData();
     this.loadRainData();
     // this.openDialog();
+  }
+
+  renderGraphs() {
+    this.socketService.getDataStream().subscribe((val) => {
+      console.log(val);
+    });
   }
 
   successLocation = () => {
@@ -198,10 +213,10 @@ export class MapViewComponent implements OnInit {
 
   loadRainData() {}
 
-  openDialog() {
+  openDialog(val: any) {
     const dialogRef = this.dialog.open(AlertModalComponent, {
       width: '450px',
-      data: { type: 'Tsunami', message: 'coming from backend' },
+      data: { type: val.disasterType, message: val.message },
     });
   }
 }

@@ -1,3 +1,4 @@
+import { SocketIoService } from './shared/services/socket-io.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -17,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     MapViewComponent,
     VoteViewComponent,
     AlertModalComponent,
+    SnackBarComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,7 +46,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatSnackBarModule,
     MatDialogModule,
   ],
-  providers: [],
+  providers: [SocketIoService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
